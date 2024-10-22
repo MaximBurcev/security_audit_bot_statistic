@@ -1,76 +1,137 @@
 <?php
+/*
+ * Файл local/modules/scrollup/install/index.php
+ */
 
-
-//подключаем основные классы для работы с модулем
-use Bitrix\Main\Application;
-use Bitrix\Main\Loader;
-use Bitrix\Main\Entity\Base;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
-
-//в данном модуле создадим адресную книгу, и здесь мы подключаем класс, который создаст нам эту таблицу
-use Module\Adress\AdressTable;
+use Bitrix\Main\Config\Option;
+use Bitrix\Main\EventManager;
+use Bitrix\Main\Application;
+use Bitrix\Main\IO\Directory;
 
 Loc::loadMessages(__FILE__);
 
-//в названии класса пишем название директории нашего модуля, только вместо точки ставим нижнее подчеркивание
-class intensa_security_audit_bot_statistic extends CModule
-{
-    public function __construct()
-    {
-        $arModuleVersion = [];
-        //подключаем версию модуля (файл будет следующим в списке)
-        include __DIR__ . '/version.php';
-        //присваиваем свойствам класса переменные из нашего файла
-        if (is_array($arModuleVersion) && array_key_exists('VERSION', $arModuleVersion)) {
-            $this->MODULE_VERSION = $arModuleVersion['VERSION'];
+class intensa_security_audit_bot_statistic extends CModule {
+
+    public function __construct() {
+        if (is_file(__DIR__.'/version.php')) {
+            include_once(__DIR__.'/version.php');
+            $this->MODULE_ID           = get_class($this);
+            $this->MODULE_VERSION      = $arModuleVersion['VERSION'];
             $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
+            $this->MODULE_NAME         = Loc::getMessage('SCROLLUP_NAME');
+            $this->MODULE_DESCRIPTION  = Loc::getMessage('SCROLLUP_DESCRIPTION');
+        } else {
+            CAdminMessage::showMessage(
+                Loc::getMessage('SCROLLUP_FILE_NOT_FOUND').' version.php'
+            );
         }
-        //пишем название нашего модуля как и директории
-        $this->MODULE_ID = 'intensa.security_audit_bot_statistic';
-        // название модуля
-        $this->MODULE_NAME = Loc::getMessage('MYMODULE_MODULE_NAME');
-        //описание модуля
-        $this->MODULE_DESCRIPTION = Loc::getMessage('MYMODULE_MODULE_DESCRIPTION');
-        //используем ли индивидуальную схему распределения прав доступа, мы ставим N, так как не используем ее
-        $this->MODULE_GROUP_RIGHTS = 'N';
-        //название компании партнера предоставляющей модуль
-        $this->PARTNER_NAME = Loc::getMessage('MYMODULE_MODULE_PARTNER_NAME');
-        $this->PARTNER_URI = 'https://вашсайт';//адрес вашего сайта
     }
 
-    //здесь мы описываем все, что делаем до инсталляции модуля, мы добавляем наш модуль в регистр и вызываем метод создания таблицы
-    public function doInstall()
-    {
-        ModuleManager::registerModule($this->MODULE_ID);
-        $this->installDB();
+    public function doInstall() {
+
+        global $APPLICATION;
+
+        // мы используем функционал нового ядра D7 — поддерживает ли его система?
+        if (CheckVersion(ModuleManager::getVersion('main'), '14.00.00')) {
+            // копируем файлы, необходимые для работы модуля
+            $this->installFiles();
+            // создаем таблицы БД, необходимые для работы модуля
+            $this->installDB();
+            // регистрируем модуль в системе
+            ModuleManager::registerModule($this->MODULE_ID);
+            // регистрируем обработчики событий
+            $this->installEvents();
+        } else {
+            CAdminMessage::showMessage(
+                Loc::getMessage('SCROLLUP_INSTALL_ERROR')
+            );
+            return;
+        }
+
+        $APPLICATION->includeAdminFile(
+            Loc::getMessage('SCROLLUP_INSTALL_TITLE').' «'.Loc::getMessage('SCROLLUP_NAME').'»',
+            __DIR__.'/step.php'
+        );
     }
 
-    //вызываем метод удаления таблицы и удаляем модуль из регистра
-    public function doUninstall()
-    {
+    public function installFiles() {
+        // копируем js-файлы, необходимые для работы модуля
+        CopyDirFiles(
+            __DIR__.'/assets/scripts',
+            Application::getDocumentRoot().'/bitrix/js/'.$this->MODULE_ID.'/',
+            true,
+            true
+        );
+        // копируем css-файлы, необходимые для работы модуля
+        CopyDirFiles(
+            __DIR__.'/assets/styles',
+            Application::getDocumentRoot().'/bitrix/css/'.$this->MODULE_ID.'/',
+            true,
+            true
+        );
+    }
+
+    public function installDB() {
+        return;
+    }
+
+    public function installEvents() {
+        // перед выводом буферизированного контента добавим свой HTML код,
+        // в котором сохраним настройки для нашей кнопки прокрутки наверх
+        EventManager::getInstance()->registerEventHandler(
+            'main',
+            'OnBeforeEndBufferContent',
+            $this->MODULE_ID,
+            'ScrollUp\\Main',
+            'appendJavaScriptAndCSS'
+        );
+    }
+
+    public function doUninstall() {
+
+        global $APPLICATION;
+
+        $this->uninstallFiles();
         $this->uninstallDB();
+        $this->uninstallEvents();
+
         ModuleManager::unRegisterModule($this->MODULE_ID);
+
+        $APPLICATION->includeAdminFile(
+            Loc::getMessage('SCROLLUP_UNINSTALL_TITLE').' «'.Loc::getMessage('SCROLLUP_NAME').'»',
+            __DIR__.'/unstep.php'
+        );
+
     }
 
-    //вызываем метод создания таблицы из выше подключенного класса
-    public function installDB()
-    {
-        if (Loader::includeModule($this->MODULE_ID)) {
-            AdressTable::getEntity()->createDbTable();
-        }
+    public function uninstallFiles() {
+        // удаляем js-файлы
+        Directory::deleteDirectory(
+            Application::getDocumentRoot().'/bitrix/js/'.$this->MODULE_ID
+        );
+        // удаляем css-файлы
+        Directory::deleteDirectory(
+            Application::getDocumentRoot().'/bitrix/css/'.$this->MODULE_ID
+        );
+        // удаляем настройки нашего модуля
+        Option::delete($this->MODULE_ID);
     }
 
-    //вызываем метод удаления таблицы, если она существует
-    public function uninstallDB()
-    {
-        if (Loader::includeModule($this->MODULE_ID)) {
-            if (Application::getConnection()->isTableExists(
-                Base::getInstance('\Module\Adress\AdressTable')->getDBTableName()
-            )) {
-                $connection = Application::getInstance()->getConnection();
-                $connection->dropTable(AdressTable::getTableName());
-            }
-        }
+    public function uninstallDB() {
+        return;
     }
+
+    public function uninstallEvents() {
+        // удаляем наш обработчик события
+        EventManager::getInstance()->unRegisterEventHandler(
+            'main',
+            'OnBeforeEndBufferContent',
+            $this->MODULE_ID,
+            'ScrollUp\\Main',
+            'appendJavaScriptAndCSS'
+        );
+    }
+
 }
