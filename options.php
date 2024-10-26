@@ -17,113 +17,113 @@ Loader::includeModule($module_id);
 /*
  * Параметры модуля со значениями по умолчанию
  */
-$aTabs = array(
-    array(
+$aTabs = [
+    [
         /*
          * Первая вкладка «Основные настройки»
          */
         'DIV'     => 'edit1',
-        'TAB'     => Loc::getMessage('SCROLLUP_OPTIONS_TAB_GENERAL'),
-        'TITLE'   => Loc::getMessage('SCROLLUP_OPTIONS_TAB_GENERAL'),
-        'OPTIONS' => array(
-            array(
+        'TAB'     => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_GENERAL'),
+        'TITLE'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_GENERAL'),
+        'OPTIONS' => [
+            [
                 'switch_on',                                   // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_SWITCH_ON'), // поясняющий текст — «Включить прокрутку»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SWITCH_ON'), // поясняющий текст — «Включить прокрутку»
                 'Y',                                           // значение по умолчанию «да»
-                array('checkbox')                              // тип элемента формы — checkbox
-            ),
-            array(
+                ['checkbox']                              // тип элемента формы — checkbox
+            ],
+            [
                 'jquery_on',                                   // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_JQUERY_ON'), // поясняющий текст — «Подключить jQuery»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_JQUERY_ON'), // поясняющий текст — «Подключить jQuery»
                 'N',                                           // значение по умолчанию «нет»
-                array('checkbox')                              // тип элемента формы — checkbox
-            ),
-        )
-    ),
-    array(
+                ['checkbox']                              // тип элемента формы — checkbox
+            ],
+        ]
+    ],
+    [
         /*
          * Вторая вкладка «Дополнительные настройки»
          */
         'DIV'     => 'edit2',
-        'TAB'     => Loc::getMessage('SCROLLUP_OPTIONS_TAB_ADDITIONAL'),
-        'TITLE'   => Loc::getMessage('SCROLLUP_OPTIONS_TAB_ADDITIONAL'),
-        'OPTIONS' => array(
+        'TAB'     => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_ADDITIONAL'),
+        'TITLE'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_ADDITIONAL'),
+        'OPTIONS' => [
             /*
              * секция «Внешний вид»
              */
-            Loc::getMessage('SCROLLUP_OPTIONS_SECTION_VIEW'),
-            array(
+            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SECTION_VIEW'),
+            [
                 'width',                                    // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_WIDTH'),  // поясняющий текст — «Ширина (пикселей)»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_WIDTH'),  // поясняющий текст — «Ширина (пикселей)»
                 '50',                                       // значение по умолчанию 50px
-                array('text', 5)                            // тип элемента формы — input type="text", ширина 5 симв.
-            ),
-            array(
+                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
+            ],
+            [
                 'height',                                   // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_HEIGHT'), // поясняющий текст — «Высота (пикселей)»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_HEIGHT'), // поясняющий текст — «Высота (пикселей)»
                 '50',                                       // значение по умолчанию 50px
-                array('text', 5)                            // тип элемента формы — input type="text", ширина 5 симв.
-            ),
-            array(
+                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
+            ],
+            [
                 'radius',                                   // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_RADIUS'), // поясняющий текст — «Радиус (пикселей)»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_RADIUS'), // поясняющий текст — «Радиус (пикселей)»
                 '50',                                       // значение по умолчанию 50px
-                array('text', 5)                            // тип элемента формы — input type="text", ширина 5 симв.
-            ),
-            array(
+                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
+            ],
+            [
                 'color',                                    // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_COLOR'),  // поясняющий текст — «Цвет фона»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_COLOR'),  // поясняющий текст — «Цвет фона»
                 '#bf3030',                                  // значение по умолчанию #bf3030
-                array('text', 5)                            // тип элемента формы — input type="text", ширина 5 симв.
-            ),
+                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
+            ],
             /*
              * секция «Положение на странице»
              */
-            Loc::getMessage('SCROLLUP_OPTIONS_SECTION_LAYOUT'),
-            array(
+            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SECTION_LAYOUT'),
+            [
                 'side',                                       // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_POSITION'), // поясняющий текст — «Положение кнопки»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_POSITION'), // поясняющий текст — «Положение кнопки»
                 'left',                                       // значение по умолчанию «left»
-                array(
+                [
                     'selectbox',                              // тип элемента формы — <select>
-                    array(
-                        'left'  => Loc::getMessage('SCROLLUP_OPTIONS_SIDE_LEFT'),
-                        'right' => Loc::getMessage('SCROLLUP_OPTIONS_SIDE_RIGHT')
-                    )
-                )
-            ),
-            array(
+                    [
+                        'left'  => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SIDE_LEFT'),
+                        'right' => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SIDE_RIGHT')
+                    ]
+                ]
+            ],
+            [
                 'indent_bottom',                                   // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_INDENT_BOTTOM'), // поясняющий текст — «Отступ снизу (пикселей)»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_INDENT_BOTTOM'), // поясняющий текст — «Отступ снизу (пикселей)»
                 '10',                                              // значение по умолчанию 10px
-                array('text', 5)                                   // тип элемента формы — input type="text"
-            ),
-            array(
+                ['text', 5]                                   // тип элемента формы — input type="text"
+            ],
+            [
                 'indent_side',                                     // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_INDENT_SIDE'),   // поясняющий текст — «Отступ сбоку (пикселей)»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_INDENT_SIDE'),   // поясняющий текст — «Отступ сбоку (пикселей)»
                 '10',                                              // значение по умолчанию 10px
-                array('text', 5)                                   // тип элемента формы — input type="text"
-            ),
+                ['text', 5]                                   // тип элемента формы — input type="text"
+            ],
             /*
              * секция «Поведение»
              */
-            Loc::getMessage('SCROLLUP_OPTIONS_SECTION_ACTION'),
-            array(
+            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SECTION_ACTION'),
+            [
                 'speed',                                   // имя элемента формы
-                Loc::getMessage('SCROLLUP_OPTIONS_SPEED'), // поясняющий текст — «Скорость прокрутки»
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED'), // поясняющий текст — «Скорость прокрутки»
                 'normal',                                  // значение по умолчанию «normal»
-                array(
+                [
                     'selectbox',                           // тип элемента формы — <select>
-                    array(
-                        'slow'   => Loc::getMessage('SCROLLUP_OPTIONS_SPEED_SLOW'),
-                        'normal' => Loc::getMessage('SCROLLUP_OPTIONS_SPEED_NORMAL'),
-                        'fast'   => Loc::getMessage('SCROLLUP_OPTIONS_SPEED_FAST')
-                    )
-                )
-            )
-        )
-    )
-);
+                    [
+                        'slow'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED_SLOW'),
+                        'normal' => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED_NORMAL'),
+                        'fast'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED_FAST')
+                    ]
+                ]
+            ]
+        ]
+    ]
+];
 
 /*
  * Создаем форму для редактирвания параметров модуля
@@ -135,7 +135,7 @@ $tabControl = new CAdminTabControl(
 
 $tabControl->begin();
 ?>
-    <form action="<?= $APPLICATION->getCurPage(); ?>?mid=<?=$module_id; ?>&lang=<?= LANGUAGE_ID; ?>" method="post">
+    <form action="<?= $APPLICATION->getCurPage(); ?>?mid=<?= $module_id; ?>&lang=<?= LANGUAGE_ID; ?>" method="post">
         <?= bitrix_sessid_post(); ?>
         <?php
         foreach ($aTabs as $aTab) { // цикл по вкладкам
@@ -147,9 +147,9 @@ $tabControl->begin();
         $tabControl->buttons();
         ?>
         <input type="submit" name="apply"
-               value="<?= Loc::GetMessage('SCROLLUP_OPTIONS_INPUT_APPLY'); ?>" class="adm-btn-save" />
+               value="<?= Loc::GetMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_INPUT_APPLY'); ?>" class="adm-btn-save"/>
         <input type="submit" name="default"
-               value="<?= Loc::GetMessage('SCROLLUP_OPTIONS_INPUT_DEFAULT'); ?>" />
+               value="<?= Loc::GetMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_INPUT_DEFAULT'); ?>"/>
     </form>
 
 <?php
@@ -159,7 +159,6 @@ $tabControl->end();
  * Обрабатываем данные после отправки формы
  */
 if ($request->isPost() && check_bitrix_sessid()) {
-
     foreach ($aTabs as $aTab) { // цикл по вкладкам
         foreach ($aTab['OPTIONS'] as $arOption) {
             if (!is_array($arOption)) { // если это название секции
@@ -170,23 +169,17 @@ if ($request->isPost() && check_bitrix_sessid()) {
             }
             if ($request['apply']) { // сохраняем введенные настройки
                 $optionValue = $request->getPost($arOption[0]);
-                if ($arOption[0] == 'switch_on') {
-                    if ($optionValue == '') {
-                        $optionValue = 'N';
-                    }
-                }
-                if ($arOption[0] == 'jquery_on') {
-                    if ($optionValue == '') {
-                        $optionValue = 'N';
-                    }
-                }
-                Option::set($module_id, $arOption[0], is_array($optionValue) ? implode(',', $optionValue) : $optionValue);
+                
+                Option::set(
+                    $module_id,
+                    $arOption[0],
+                    is_array($optionValue) ? implode(',', $optionValue) : $optionValue
+                );
             } elseif ($request['default']) { // устанавливаем по умолчанию
                 Option::set($module_id, $arOption[0], $arOption[2]);
             }
         }
     }
 
-    LocalRedirect($APPLICATION->getCurPage().'?mid='.$module_id.'&lang='.LANGUAGE_ID);
-
+    LocalRedirect($APPLICATION->getCurPage() . '?mid=' . $module_id . '&lang=' . LANGUAGE_ID);
 }

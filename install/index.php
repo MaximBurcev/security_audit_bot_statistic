@@ -58,12 +58,12 @@ class intensa_security_audit_bot_statistic extends CModule
 
     public function installFiles(): void
     {
+
         CopyDirFiles(
-            __DIR__ . "/admin/security_audit_bot_statistic/step.php",
+            __DIR__ . "/../admin/security_audit_bot_statistic.php",
             $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/security_audit_bot_statistic.php",
-            true, // перезаписывает файлы
-            true  // копирует рекурсивно
         );
+
     }
 
     public function installDB()
@@ -92,8 +92,8 @@ class intensa_security_audit_bot_statistic extends CModule
     public function uninstallFiles()
     {
         DeleteDirFiles(
-            __DIR__ . "/admin",
-            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin"
+            __DIR__ . "/../admin/",
+            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/",
         );
         // удаляем настройки нашего модуля
         Option::delete($this->MODULE_ID);
