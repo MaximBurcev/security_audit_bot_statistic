@@ -1,7 +1,5 @@
 <?php
-/*
- * Файл local/modules/scrollup/install/index.php
- */
+
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
@@ -12,126 +10,99 @@ use Bitrix\Main\IO\Directory;
 
 Loc::loadMessages(__FILE__);
 
-class intensa_security_audit_bot_statistic extends CModule {
+class intensa_security_audit_bot_statistic extends CModule
+{
 
-    public function __construct() {
-        if (is_file(__DIR__.'/version.php')) {
-            include_once(__DIR__.'/version.php');
-            $this->MODULE_ID           = get_class($this);
-            $this->MODULE_VERSION      = $arModuleVersion['VERSION'];
+    public function __construct()
+    {
+        if (is_file(__DIR__ . '/version.php')) {
+            include_once(__DIR__ . '/version.php');
+            $this->MODULE_ID = 'intensa.security_audit_bot_statistic';
+            $this->MODULE_VERSION = $arModuleVersion['VERSION'];
             $this->MODULE_VERSION_DATE = $arModuleVersion['VERSION_DATE'];
-            $this->MODULE_NAME         = Loc::getMessage('SCROLLUP_NAME');
-            $this->MODULE_DESCRIPTION  = Loc::getMessage('SCROLLUP_DESCRIPTION');
+            $this->MODULE_NAME = Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_MODULE_NAME');
+            $this->MODULE_DESCRIPTION = Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_MODULE_DESCRIPTION');
         } else {
             CAdminMessage::showMessage(
-                Loc::getMessage('SCROLLUP_FILE_NOT_FOUND').' version.php'
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_VERSION_FILE_NOT_FOUND') . ' version.php'
             );
         }
     }
 
-    public function doInstall() {
-
+    public function doInstall()
+    {
         global $APPLICATION;
 
         // мы используем функционал нового ядра D7 — поддерживает ли его система?
-        if (CheckVersion(ModuleManager::getVersion('main'), '14.00.00')) {
+        if (version_compare(ModuleManager::getVersion('main'), '14.00.00') >= 0) {
             // копируем файлы, необходимые для работы модуля
             $this->installFiles();
             // создаем таблицы БД, необходимые для работы модуля
             $this->installDB();
             // регистрируем модуль в системе
             ModuleManager::registerModule($this->MODULE_ID);
-            // регистрируем обработчики событий
-            $this->installEvents();
         } else {
             CAdminMessage::showMessage(
-                Loc::getMessage('SCROLLUP_INSTALL_ERROR')
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_INSTALL_ERROR')
             );
             return;
         }
 
         $APPLICATION->includeAdminFile(
-            Loc::getMessage('SCROLLUP_INSTALL_TITLE').' «'.Loc::getMessage('SCROLLUP_NAME').'»',
-            __DIR__.'/step.php'
+            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_INSTALL_TITLE') . ' «' . Loc::getMessage(
+                'SECURITY_AUDIT_BOT_STATISTIC_MODULE_NAME'
+            ) . '»',
+            __DIR__ . '/step.php'
         );
     }
 
-    public function installFiles() {
-        // копируем js-файлы, необходимые для работы модуля
+    public function installFiles(): void
+    {
         CopyDirFiles(
-            __DIR__.'/assets/scripts',
-            Application::getDocumentRoot().'/bitrix/js/'.$this->MODULE_ID.'/',
-            true,
-            true
-        );
-        // копируем css-файлы, необходимые для работы модуля
-        CopyDirFiles(
-            __DIR__.'/assets/styles',
-            Application::getDocumentRoot().'/bitrix/css/'.$this->MODULE_ID.'/',
-            true,
-            true
+            __DIR__ . "/admin/security_audit_bot_statistic/step.php",
+            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/security_audit_bot_statistic.php",
+            true, // перезаписывает файлы
+            true  // копирует рекурсивно
         );
     }
 
-    public function installDB() {
+    public function installDB()
+    {
         return;
     }
 
-    public function installEvents() {
-        // перед выводом буферизированного контента добавим свой HTML код,
-        // в котором сохраним настройки для нашей кнопки прокрутки наверх
-        EventManager::getInstance()->registerEventHandler(
-            'main',
-            'OnBeforeEndBufferContent',
-            $this->MODULE_ID,
-            'ScrollUp\\Main',
-            'appendJavaScriptAndCSS'
-        );
-    }
 
-    public function doUninstall() {
-
+    public function doUninstall()
+    {
         global $APPLICATION;
 
         $this->uninstallFiles();
         $this->uninstallDB();
-        $this->uninstallEvents();
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
 
         $APPLICATION->includeAdminFile(
-            Loc::getMessage('SCROLLUP_UNINSTALL_TITLE').' «'.Loc::getMessage('SCROLLUP_NAME').'»',
-            __DIR__.'/unstep.php'
+            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_UNINSTALL_TITLE') . ' «' . Loc::getMessage(
+                'SECURITY_AUDIT_BOT_STATISTIC_MODULE_NAME'
+            ) . '»',
+            __DIR__ . '/unstep.php'
         );
-
     }
 
-    public function uninstallFiles() {
-        // удаляем js-файлы
-        Directory::deleteDirectory(
-            Application::getDocumentRoot().'/bitrix/js/'.$this->MODULE_ID
-        );
-        // удаляем css-файлы
-        Directory::deleteDirectory(
-            Application::getDocumentRoot().'/bitrix/css/'.$this->MODULE_ID
+    public function uninstallFiles()
+    {
+        DeleteDirFiles(
+            __DIR__ . "/admin",
+            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin"
         );
         // удаляем настройки нашего модуля
         Option::delete($this->MODULE_ID);
     }
 
-    public function uninstallDB() {
+    public function uninstallDB()
+    {
         return;
     }
 
-    public function uninstallEvents() {
-        // удаляем наш обработчик события
-        EventManager::getInstance()->unRegisterEventHandler(
-            'main',
-            'OnBeforeEndBufferContent',
-            $this->MODULE_ID,
-            'ScrollUp\\Main',
-            'appendJavaScriptAndCSS'
-        );
-    }
 
 }

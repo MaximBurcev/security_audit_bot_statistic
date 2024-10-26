@@ -14,17 +14,17 @@ if (!check_bitrix_sessid()){
 if ($errorException = $APPLICATION->getException()) {
     // ошибка при удалении модуля
     CAdminMessage::showMessage(
-        Loc::getMessage('SCROLLUP_UNINSTALL_FAILED').': '.$errorException->GetString()
+        Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_UNINSTALL_FAILED').': '.$errorException->GetString()
     );
 } else {
     // модуль успешно удален
     CAdminMessage::showNote(
-        Loc::getMessage('SCROLLUP_UNINSTALL_SUCCESS')
+        Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_UNINSTALL_SUCCESS')
     );
 }
 ?>
 
 <form action="<?= $APPLICATION->getCurPage(); ?>"> <!-- Кнопка возврата к списку модулей -->
     <input type="hidden" name="lang" value="<?= LANGUAGE_ID; ?>" />
-    <input type="submit" value="<?= Loc::getMessage('SCROLLUP_RETURN_MODULES'); ?>">
+    <input type="submit" value="<?= Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_RETURN_MODULES'); ?>">
 </form>
