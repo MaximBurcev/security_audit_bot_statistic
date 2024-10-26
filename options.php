@@ -27,102 +27,13 @@ $aTabs = [
         'TITLE'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_GENERAL'),
         'OPTIONS' => [
             [
-                'switch_on',                                   // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SWITCH_ON'), // поясняющий текст — «Включить прокрутку»
-                'Y',                                           // значение по умолчанию «да»
-                ['checkbox']                              // тип элемента формы — checkbox
-            ],
-            [
-                'jquery_on',                                   // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_JQUERY_ON'), // поясняющий текст — «Подключить jQuery»
-                'N',                                           // значение по умолчанию «нет»
-                ['checkbox']                              // тип элемента формы — checkbox
+                'api_token',
+                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_API_TOKEN'),
+                '',
+                ['text', 100]
             ],
         ]
     ],
-    [
-        /*
-         * Вторая вкладка «Дополнительные настройки»
-         */
-        'DIV'     => 'edit2',
-        'TAB'     => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_ADDITIONAL'),
-        'TITLE'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_TAB_ADDITIONAL'),
-        'OPTIONS' => [
-            /*
-             * секция «Внешний вид»
-             */
-            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SECTION_VIEW'),
-            [
-                'width',                                    // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_WIDTH'),  // поясняющий текст — «Ширина (пикселей)»
-                '50',                                       // значение по умолчанию 50px
-                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
-            ],
-            [
-                'height',                                   // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_HEIGHT'), // поясняющий текст — «Высота (пикселей)»
-                '50',                                       // значение по умолчанию 50px
-                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
-            ],
-            [
-                'radius',                                   // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_RADIUS'), // поясняющий текст — «Радиус (пикселей)»
-                '50',                                       // значение по умолчанию 50px
-                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
-            ],
-            [
-                'color',                                    // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_COLOR'),  // поясняющий текст — «Цвет фона»
-                '#bf3030',                                  // значение по умолчанию #bf3030
-                ['text', 5]                            // тип элемента формы — input type="text", ширина 5 симв.
-            ],
-            /*
-             * секция «Положение на странице»
-             */
-            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SECTION_LAYOUT'),
-            [
-                'side',                                       // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_POSITION'), // поясняющий текст — «Положение кнопки»
-                'left',                                       // значение по умолчанию «left»
-                [
-                    'selectbox',                              // тип элемента формы — <select>
-                    [
-                        'left'  => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SIDE_LEFT'),
-                        'right' => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SIDE_RIGHT')
-                    ]
-                ]
-            ],
-            [
-                'indent_bottom',                                   // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_INDENT_BOTTOM'), // поясняющий текст — «Отступ снизу (пикселей)»
-                '10',                                              // значение по умолчанию 10px
-                ['text', 5]                                   // тип элемента формы — input type="text"
-            ],
-            [
-                'indent_side',                                     // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_INDENT_SIDE'),   // поясняющий текст — «Отступ сбоку (пикселей)»
-                '10',                                              // значение по умолчанию 10px
-                ['text', 5]                                   // тип элемента формы — input type="text"
-            ],
-            /*
-             * секция «Поведение»
-             */
-            Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SECTION_ACTION'),
-            [
-                'speed',                                   // имя элемента формы
-                Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED'), // поясняющий текст — «Скорость прокрутки»
-                'normal',                                  // значение по умолчанию «normal»
-                [
-                    'selectbox',                           // тип элемента формы — <select>
-                    [
-                        'slow'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED_SLOW'),
-                        'normal' => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED_NORMAL'),
-                        'fast'   => Loc::getMessage('SECURITY_AUDIT_BOT_STATISTIC_OPTIONS_SPEED_FAST')
-                    ]
-                ]
-            ]
-        ]
-    ]
 ];
 
 /*

@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_ad
 
 // пространство имен для автозагрузки модулей
 use \Bitrix\Main\Loader;
+use SecurityAuditBotStatistic\StatisticTable;
 
 // получим права доступа текущего пользователя на модуль
 $POST_RIGHT = $APPLICATION->GetGroupRight("intensa.security_audit_bot_statistic");
@@ -20,9 +21,24 @@ IncludeModuleLangFile(__FILE__);
 Loader::includeModule("intensa.security_audit_bot_statistic");
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_after.php';
+$arData = StatisticTable::getList()->fetchAll();
 ?>
 
-sdfsdf
+<?php
+foreach ($arData as $arDataItem) {
+    ?>
+    <h3><?=$arDataItem['date']?></h3>
+    <ul>
+        <li>users: <?=$arDataItem['users']?></li>
+        <li>reports: <?=$arDataItem['reports']?></li>
+        <li>audits: <?=$arDataItem['audits']?></li>
+        <li>projects: <?=$arDataItem['projects']?></li>
+        <li>tasks: <?=$arDataItem['tasks']?></li>
+        <li>utilities: <?=$arDataItem['utilities']?></li>
+    </ul>
+    <?php
+}
+?>
 
 
 <?php

@@ -1,9 +1,9 @@
 <?php
 
-
 Bitrix\Main\Loader::registerAutoloadClasses(
-    'scrollup',
+    'intensa.security_audit_bot_statistic',
     [
-        'ScrollUp\\Main' => 'lib/Main.php',
+        'SecurityAuditBotStatistic\\StatisticTable' => 'lib/StatisticTable.php',
+        'SecurityAuditBotStatistic\\Agent'          => 'lib/Agent.php',
     ]
 );
